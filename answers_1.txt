@@ -1,0 +1,88 @@
+1.
+a.) String
+b.) Integer
+c.) Integer
+d.) float
+e.) float
+
+
+2.
+Databases are used when creating digital library catalogs. As well as for messaging apps.
+
+
+3.
+With programming languages, programmers have the ability to write step-by-step instructions telling
+the computer exactly what to do to achieve a specified goal. SQL on the other hand is a declarative language,
+you tell the computer what you want and the computer figures out what to do and comes back at you with a result.
+
+
+4.
+Pieces of database work together to store data with labels even in a larger scale.
+Pieces of databases also work together so you can easily locate datas despite the number of data.
+
+
+5.
+Table - Is a data structure that organizes information into rows and columns. It can be used to both store and
+display data in structured format.
+
+Row - Is a horizontal group of values within a table. It contains values for multiple fields, which are defined
+by columns. Because rows contain data from multiple columns, in databases, each table row may be considered a record.
+
+Columns - Is a vertical group of values within a table. It contains value from a single field in multiple rows.
+In database, columns may be defined as individual fields within a table.
+
+Value - also known as data elements, are the datas submitted to the database that is the primary composition of a table.
+
+
+6.
+String
+Integer
+Float
+
+
+7.
+Obtain the values of columns date and amount from payments table. -
+date         amount
+5/1/2016     1500.00
+5/10/2016    37.00
+5/15/2016    124.93
+5/23/2016    54.72
+
+Obtain the values of amount that are greater than 500 from payments table. -
+amount
+1500.00
+
+Obtain the values of all columns from payments table where payee column is equal to "Mega Foods" -
+date        payee        amount   memo
+5/15/2016 	Mega Foods	 124.93	  Groceries
+
+
+8.
+
+a.)
+SELECT email, signup
+FROM users;
+
+email                               signup
+aleesia.algorithm@uw.edu            2014-10-24
+datad@comcast.net                   2008-01-20
+chris.collection@outlook.com        2012-01-20
+bboolean@nasa.gov                   1999-10-15
+
+
+b.)
+SELECT userid
+FROM user
+WHERE email = 'aleesia.algorithm@uw.edu';
+
+userid
+1
+
+
+c.)
+SELECT *
+FROM user
+WHERE userid = 4;
+
+userid   name             email                     signup
+4     	Brandy Boolean	bboolean@nasa.gov	          1999-10-15
