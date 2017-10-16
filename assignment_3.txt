@@ -1,0 +1,122 @@
+1.
+INSERT INTO table (column name/s) VALUES (value/s);
+UPDATE table SET columnname = value WHERE keyword;
+DELETE FROM table WHERE keyword;
+
+
+2.
+adding data = you want to insert the value or set of values into a specified column in a table
+updating data = you want set a data to a corresponding column name in which you can use WHERE
+to locate the specific row in a table.
+deleting data = you want to delete a specific row using the WHERE keyword from a table.
+
+
+3.
+Boolean = to indicate whether or not a food has been delivered or not.
+Timestamp = to indicate a specific date and time of signing in to work.
+Text = Use to fill out a description of an item in craigslist.
+Numeric = Use to indicate a price in an online selling website such as amazon.
+
+
+4.
+a.) Text; Boolean; Integer; Integer
+
+b.)
+CREATE TABLE wedding (
+  fullName text,
+  RSVP boolean,
+  guestNo integer,
+  mealsNo integer
+);
+
+c.)
+ALTER TABLE wedding ADD COLUMN thankYou boolean;
+
+d.)
+ALTER TABLE wedding DROP COLUMN mealsNo;
+
+e.)
+ALTER TABLE wedding ADD COLUMN seatNo integer;
+
+f.)
+DROP TABLE wedding;
+
+
+5.
+a.)
+CREATE TABLE library (
+  isbn varchar,
+  title text,
+  author text,
+  genre text,
+  publishDate date,
+  copies integer,
+  availCopies integer
+);
+
+b.)
+INSERT INTO library (isbn, title, author, genre, publishDate, copies, availCopies)
+VALUES
+(9788496422612, 'Game of Thrones', 'George R.R. Martin', 'Fantasy', '08-01-1996', 1000, 50  ),
+(9780002245845, 'A Clash of Kings', 'George R.R. Martin', 'Fantasy', '11-16-1998', 800, 500  ),
+(9781101873533, 'A Dance With Dragons', 'George R.R. Martin', 'Fantasy', '07-12-2011', 4000, 3500  );
+
+c.)
+UPDATE library SET availCopies = 499 WHERE isbn=9780002245845;
+
+d.)
+DELETE FROM library WHERE name='A Dance With Dragons';
+
+
+6.
+a.)
+CREATE TABLE spacecrafts (
+  id integer,
+  name text,
+  launched date,
+  origin text,
+  description text,
+  orbitBody text,
+  operating boolean,
+  milesFromEarth decimal
+);
+
+b.)
+INSERT INTO spacecrafts(id, name, launched, origin, description, orbitBody, operating, milesFromEarth)
+VALUES
+(1, lexus, 11-11-1999, earth, 'study saturn', 'saturn', true, 60000000.50),
+(2, acura, 04-17-2015, earth, 'study neptune', 'neptune', true, 80000000.13),
+(3, bmw, 07-11-1995, earth, 'study jupiter', 'jupiter', false, 40000000.29);
+
+c.)
+DELETE FROM spacecrafts WHERE id=3;
+
+d.)
+UPDATE spacecrafts SET operating=false WHERE id=2;
+
+
+7.
+a.)
+CREATE TABLE email (
+  id integer,
+  subject text,
+  sender text,
+  recipients text[],
+  body text,
+  timestamp TIMESTAMP,
+  read boolean NOT NULL DEFAULT false,
+  emailChainId integer
+);
+
+b.)
+INSERT INTO email (id, subject, sender, recipients, body, timestamp, read, emailChainId)
+VALUES
+(1, "How Are You?", "Jonas", { "Shaq", "Lebron" }, "How are you guys doing everything alright?", '2015-07-24 12:30:22', false, 123 ),
+(2, "Im Fine Thank You", "Lebron", { "Shaq", "Jonas" }, "Im doing good my friend, everything is fine here.", '2015-07-25 05:23:10', false, 123 ),
+(3, "Let Us Have a Drink This Friday", "Shaq", { "Jonas", "Lebron" }, "Lets have a drink this friday, are you guys available", '2015-07-24 11:59:39', false, 123 );
+
+c.)
+DELETE FROM email WHERE id=2;
+
+d.)
+UPDATE email SET recipients= { "Shaq", "Josh" } WHERE id=2 AND subject="Im Fine Thank You"; 
