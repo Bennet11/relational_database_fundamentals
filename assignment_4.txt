@@ -1,0 +1,102 @@
+1.)
+SELECT title FROM records WHERE singer='Eazy-E';
+
+2.)
+SCFTWO - Select Column From Table Where Operation.
+
+3.)
+SELECT name, gender, age FROM dogs WHERE breed LIKE '%labrador%';
+  name  | gender | age
+--------+--------+-----
+ Boujee | F      |   3
+ Marley | M      |   0
+ Boujee | F      |   3
+ Marley | M      |   0
+(4 rows)
+
+pets=# SELECT id FROM dogs WHERE age < 1;
+  id
+-------
+ 10002
+ 10004
+ 10002
+ 10004
+(4 rows)
+
+pets=# SELECT name, age FROM dogs WHERE gender='F' AND weight > 35;               name  | age
+--------+-----
+ Boujee |   3
+ Boujee |   3
+(2 rows)
+
+pets=# SELECT * FROM dogs WHERE breed NOT LIKE '%shepherd';
+id   |   name    | gender | age | weight |       breed        | intake_date | in_foster
+-------+-----------+--------+-----+--------+--------------------+-------------+------------
+10001 | Boujee    | F      |   3 |     36 | labrador poodle    | 2017-06-22  |
+10002 | Munchkin  | F      |   0 |      8 | dachsund chihuahua | 2017-01-13  | 2017-01-31
+10004 | Marley    | M      |   0 |     10 | labrador           | 2017-05-04  | 2016-06-20
+10006 | Marmaduke | M      |   7 |    150 | great dane         | 2016-03-22  | 2016-05-15
+10007 | Rosco     | M      |   5 |    180 | rottweiler         | 2017-04-01  |
+10001 | Boujee    | F      |   3 |     36 | labrador poodle    | 2017-06-22  |
+10002 | Munchkin  | F      |   0 |      8 | dachsund chihuahua | 2017-01-13  | 2017-01-31
+10004 | Marley    | M      |   0 |     10 | labrador           | 2017-05-04  | 2016-06-20
+10006 | Marmaduke | M      |   7 |    150 | great dane         | 2016-03-22  | 2016-05-15
+10007 | Rosco     | M      |   5 |    180 | rottweiler         | 2017-04-01  |
+(10 rows)
+
+pets=# SELECT id, age, weight, breed FROM dogs WHERE breed LIKE '%danes%' OR weight > 60;
+  id   | age | weight |   breed
+-------+-----+--------+------------
+ 10006 |   7 |    150 | great dane
+ 10007 |   5 |    180 | rottweiler
+ 10006 |   7 |    150 | great dane
+ 10007 |   5 |    180 | rottweiler
+(4 rows)
+
+4.)
+
+name  | adoption_date |
+-------+-----+--------+
+Mushi |   03-22-2016 |
+Seashell |   |
+Azul |   04-17-2016 |
+Victoire | 09-01-2016 |
+Nala |     |
+
+name  | age |
+-------+-----+--------+
+Mushi |   1 |
+Seashell | 7   |
+Azul |   3 |
+Victoire | 7 |
+Nala |  1  |
+
+5.)
+SELECT * FROM cats;
+
+SELECT DISTINCT age FROM cats;
+
+SELECT name FROM cats;
+
+6.)
+<  if a column value is lesser than the indicated value
+>  if a column value is greater than the indicated value
+<=  if a column value is lesser than or equal than the indicated value
+>= if a column value is greater than or equal than the indicated value
+!=  if a column value is not equal to the indicated value
+= if a column value is equal to the indicated value
+
+7.)
+
+name  |
+-------+
+Seashell
+Nala
+
+
+name  |
+-------+
+Mushi
+Seashell
+Victoire
+Nala
