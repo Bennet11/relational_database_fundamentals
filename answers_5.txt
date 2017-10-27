@@ -1,0 +1,160 @@
+1.
+MAX - Returns the highest value in a column. Returns the highest score from a test.
+MIN - Returns the lowest value in a column. Returns the cheapest price from a shopping list
+AVG - Returns the average value of a column. Returns the average grade for the whole year/
+DISTINCT - Returns the unique values from a column. Prevents a sports team from giving a duplicate jersey number.
+ORDER BY - Arrange the values in ascending order. Order a class by height.
+
+
+
+2.
+a.)
+There is no 2016 in the table
+
+b.)
+donor    | total_donations
+------------+-----------------
+Samwell    |              20
+Daario     |              10
+Brienne    |              75
+Tyrion     |             120
+Petyr      |              70
+Melisandre |              45
+Bran       |              25
+Tormund    |              50
+Ygritte    |              30
+Gilly      |               7
+Jon        |              25
+Arya       |              60
+Theon      |              20
+Bronn      |              20
+Margaery   |             120
+Missandei  |              90
+Sansa      |              33
+Daenerys   |             173
+
+c.)
+donor    |  average_donations
+------------+----------------------
+Samwell    |  20.0000000000000000
+Daario     |  10.0000000000000000
+Brienne    |  75.0000000000000000
+Tyrion     |  40.0000000000000000
+Petyr      |  70.0000000000000000
+Melisandre |  45.0000000000000000
+Bran       |  25.0000000000000000
+Tormund    |  50.0000000000000000
+Ygritte    |  30.0000000000000000
+Gilly      |   7.0000000000000000
+Jon        |  25.0000000000000000
+Arya       |  20.0000000000000000
+Theon      |  10.0000000000000000
+Bronn      |  20.0000000000000000
+Margaery   | 120.0000000000000000
+Missandei  |  22.5000000000000000
+Sansa      |  33.0000000000000000
+Daenerys   |  86.5000000000000000
+(18 rows)
+
+d.)
+iron_bank=# SELECT COUNT(amount) FROM donations WHERE amount > 100;
+ count
+-------
+     2
+(1 row)
+
+e.)
+iron_bank=# SELECT MAX(amount) FROM donations;
+ max
+-----
+ 120
+(1 row)
+
+f.)
+iron_bank=# SELECT MIN(amount) FROM donations;
+ min
+-----
+   5
+(1 row)
+
+
+
+
+
+3.
+ORDER BY column [ASC / DESC];
+
+4.
+When trying to determine the racers who finished after the 3rd place in a race.
+
+5.
+We use order by to prevent datas being out of order. Sorting datas is always a good thing since you its easier for you
+to understand a list of data if it is sorted in accordance to your liking. MIN and MAX might be helpful but it only returns
+you a single data compared to ORDER BY which arrange the columns collectively.
+
+6.
+WHERE - is used to filter records before any groupings take place. It introduces condition on individual rows.
+HAVING - is used to filter values after they have been grouped. Introduces condition on aggregations where result has been produced from multiple rows.
+
+7.
+SELECT id, SUM (amount)
+FROM payment
+GROUP BY id
+HAVING SUM (amount) > 200;
+
+
+
+8.
+a.)
+intake_date |   name
+-------------+----------
+ 2016-01-09  | Mushi
+ 2016-01-09  | Seashell
+ 2016-01-11  | Azul
+ 2016-01-11  | Victoire
+ 2016-01-12  | Nala
+(5 rows)
+
+b.)
+INSERT INTO adoptions (id, date, adopter, cat, fee) VALUES (
+  (1, DATE '2017-07-24', "Catherine", 'Mint', 60),
+  (2, DATE '2017-03-11', "Richelle", 'Smokey', 25),
+  (3, DATE '2017-07-11', "John", 'Purr', 30),
+  (4, DATE '2017-05-07', "Julie", 'Kitty', 60),
+  (5, DATE '2017-04-26', "April", 'Jj', 80)
+);
+
+c.)
+pets=# SELECT * FROM cats WHERE gender='M' AND age > 2;
+ id |   name   | gender | age | intake_date | adoption_date
+----+----------+--------+-----+-------------+---------------
+  3 | Azul     | M      |   3 | 2016-01-11  | 2016-04-17
+  4 | Victoire | M      |   7 | 2016-01-11  | 2016-09-01
+(2 rows)
+
+d.)
+iron_bank=# SELECT donor as "Platinum Donors", amount FROM donations ORDER BY amount DESC LIMIT 5;
+ Platinum Donors | amount
+-----------------+--------
+ Margaery        |    120
+ Daenerys        |    102
+ Brienne         |     75
+ Daenerys        |     71
+ Petyr           |     70
+(5 rows)
+
+e.)
+iron_bank=# SELECT donor as "Gold Donors", amount FROM donations ORDER BY amount DESC LIMIT 10 OFFSET 5;
+ Gold Donors | amount
+-------------+--------
+ Tyrion      |     60
+ Tormund     |     50
+ Tyrion      |     50
+ Melisandre  |     45
+ Sansa       |     33
+ Arya        |     30
+ Missandei   |     30
+ Ygritte     |     30
+ Missandei   |     25
+ Bran        |     25
+(10 rows)
