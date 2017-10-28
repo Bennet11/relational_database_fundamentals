@@ -1,0 +1,104 @@
+1.)
+By applying join clause and adding the on or using clause because the latter would filter
+will filter the result which data you are looking for.
+
+2.)
+CROSS JOIN - It pairs every row of Table 1 to every row in Table 2.
+
+LEFT OUTER JOIN - It returns all the data from the first table not withstand if the condition is fully satisfied or not,
+any data from the first table that does not satisfy the condition shall be given a null value for the particular column. For the second table, it will only return all the
+values that have satisfied the condition.
+
+RIGHT OUTER JOIN - The function is exactly the same as LEFT OUTER JOIN, but in this case, the datas from the second table are the ones
+that will be completely returned and any data that does not satisfy the condition will be given a null value for the particular column.
+
+INNER JOIN - It returns data from 2 tables that has satisfied the condition attributed in the clause.
+
+FULL OUTER JOIN - It is a combination of RIGHT OUTER JOIN and LEFT OUTER JOIN. Meaning, it returns all the datas from both tables and for every column
+that does not match the condition shall be given a null value.
+
+3.)
+Primary Key - a unique identifier for a data in a table.
+Your student number is a form of a primary key
+
+Foreign Key - a primary key that is also accessible to another table which may be used to link the two tables.
+
+4.)
+Aliasing is a form of renaming a specified data for easier accessibility. It is similar into setting up a variable.
+
+5.)
+SELECT p.name, c.salary, c.vacation_days
+FROM professor AS p JOIN compensation AS c ON p.id = c.professor_id;
+
+6.)
+I would use NATURAL if there are too many columns in the tables and i want to compile both of the tables as a whole through their common attributes.
+
+
+
+7.)
+
+a.)
+bloc=# SELECT * FROM employees NATURAL JOIN shift;
+ id |  name   |    day    | employee_id
+----+---------+-----------+-------------
+  1 | John    | Monday    |           1
+  2 | Ellie   | Wednesday |           2
+  3 | Estella | Friday    |           3
+
+b.)
+bloc=# SELECT day, name FROM shift JOIN employees ON shift.employee_id = employees.id;
+    day    |  name
+-----------+---------
+ Monday    | John
+ Wednesday | Ellie
+ Friday    | Estella
+
+
+
+
+8.)
+a.)
+SELECT volunteers.name FROM volunteers LEFT OUTER JOIN dogs ON volunteers.foster_id = dogs.id;
+
+b.)
+SELECT adopters, cat FROM adoptions WHERE date LIKE '%09%';
+
+c.)
+SELECT first_name, last_name FROM adopters;
+
+SELECT adopters.last_name, dogs.name FROM adopters CROSS JOIN dogs WHERE dogs.in_foster IS NULL;
+
+d.)
+SELECT cats.name, dogs.name FROM cats FULL OUTER JOIN dogs WHERE dogs.in_foster IS NULL AND cat.adoption_date IS NULL;
+
+e.)
+SELECT volunteers.name, dog.name FROM volunteers RIGHT OUTER JOIN dogs ON volunteer.foster_id = dogs.id WHERE volunteers.available_to_foster = 'YES';
+
+
+9.)
+SELECT adoptions.adopter, adoptions.cat FROM adoptions WHERE adoptions.cat = 'Seashell';
+
+
+10.)
+Books (isbn, title, author)
+Transactions(id, checked_out_date, checked_in_date, user_id, isbn)
+Holds(id, isbn, user_id, rank, date)
+Patrons(id, name, fine_amount)
+
+
+a.)
+SELECT patron.name, holds.rank, books.title FROM patron JOIN holds ON patrons.id = holds.user_id JOIN books ON holds.isbn = books.isbn WHERE books.name = 'Harry Potter and the Sorcerer’s Stone';
+
+
+b.)
+SELECT books.title, transactions.check_out_date FROM books AS b LEFT OUTER JOIN transactions AS t ON b.isbn = t.isbn;
+
+c.)
+SELECT book.title, COUNT(transactions.check_out_date) FROM books JOIN transactions ON book.isbn = transactions.isbn WHERE (DATEPART(mm, transactions.check_out_date) = 10 AND DATEPART(yy, transactions.check_out_date) = 2017);
+
+d.)
+SELECT book.title, transactions.check_out_date FROM books JOIN transactions ON 'book.isbn = transactions.isbn' ORDER BY transactions.check_out_date;
+
+
+e.)
+SELECT patrons.name, COUNT(holds.isbn) as books_checkout FROM patrons JOIN holds ON patrons.id = holds.user_id JOIN books ON holds.isbn = books.isbn GROUP BY books_checkout;
