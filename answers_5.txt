@@ -116,16 +116,11 @@ intake_date |   name
 (5 rows)
 
 b.)
-INSERT INTO adoptions (id, date, adopter, cat, fee) VALUES (
-  (1, DATE '2017-07-24', "Catherine", 'Mint', 60),
-  (2, DATE '2017-03-11', "Richelle", 'Smokey', 25),
-  (3, DATE '2017-07-11', "John", 'Purr', 30),
-  (4, DATE '2017-05-07', "Julie", 'Kitty', 60),
-  (5, DATE '2017-04-26', "April", 'Jj', 80)
-);
+
+SELECT adoptions.date FROM adoptions ORDER BY adoptions DESC LIMIT 5;
 
 c.)
-pets=# SELECT * FROM cats WHERE gender='M' AND age > 2;
+pets=# SELECT * FROM cats WHERE gender='M' AND age >= 2;
  id |   name   | gender | age | intake_date | adoption_date
 ----+----------+--------+-----+-------------+---------------
   3 | Azul     | M      |   3 | 2016-01-11  | 2016-04-17
@@ -142,7 +137,7 @@ iron_bank=# SELECT donor as "Platinum Donors", amount FROM donations ORDER BY am
  Daenerys        |     71
  Petyr           |     70
 (5 rows)
-
+SELECT sum(amount), 
 e.)
 iron_bank=# SELECT donor as "Gold Donors", amount FROM donations ORDER BY amount DESC LIMIT 10 OFFSET 5;
  Gold Donors | amount

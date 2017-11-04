@@ -99,6 +99,5 @@ SELECT book.title, COUNT(transactions.check_out_date) FROM books JOIN transactio
 d.)
 SELECT book.title, transactions.check_out_date FROM books JOIN transactions ON 'book.isbn = transactions.isbn' ORDER BY transactions.check_out_date;
 
-
 e.)
 SELECT patrons.name, COUNT(holds.isbn) as books_checkout FROM patrons JOIN holds ON patrons.id = holds.user_id JOIN books ON holds.isbn = books.isbn GROUP BY books_checkout;

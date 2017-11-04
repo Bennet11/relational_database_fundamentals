@@ -1,0 +1,104 @@
+1.)
+a.)
+hotel=# SELECT guest.first_name, guest.last_name, room_id FROM guest LEFT JOIN booking ON guest.id = booking.guest_id WHERE room_id IS NULL;
+ first_name | last_name | room_id
+------------+-----------+---------
+ Ann        | Doe       |
+(1 row)
+
+b.)
+hotel=# SELECT booking.id as booking_number, COUNT(room_id) as booking_count FROM booking GROUP BY booking.id ;
+ booking_number | booking_count
+----------------+---------------
+              1 |             1
+              3 |             1
+              2 |             1
+(3 rows)
+
+c.)
+hotel=# SELECT booking.id as booking_id, guest.first_name, guest.last_name, booking.check_in_date, booking.check_out_date FROM book
+ booking_id | first_name | last_name | check_in_date | check_out_date
+------------+------------+-----------+---------------+----------------
+          1 | John       | Smith     | 2017-01-01    | 2017-01-05
+          2 | Danos      | Slynt     | 2017-07-11    | 2017-07-14
+          3 | Eric       | Lava      | 2017-08-10    | 2018-10-08
+(3 rows)
+
+d.)
+hotel=# SELECT room.id as "room id", COUNT(DISTINCT booking.guest_id) FROM room JOIN booking ON room.id = booking.room_id GROUP BY "room id";
+ room id | count
+---------+-------
+     123 |     1
+     234 |     1
+     456 |     1
+(3 rows)
+
+2.)
+
+Students:
+id - Primary Key
+First Name
+Last Name
+
+
+Enrollment
+id
+Student_id
+Class_id
+grade
+
+Class:
+id - Primary Key
+name
+professor
+
+
+For students, i want to add an id to be as a primary key. I also want to add first name, last name as non-key attributes
+For class, i want to add id as the primary key, name and professor to be non-key attributes
+Since this is a many to many relationship, it is better to create a one to many relationship table also known as a bridge table to interconnect
+students and class tables. I will use enrollment id as the primary key, while student_id and class_id will serve as foreign keys and grade as a non-key attribute.
+
+
+app.quickdatabasediagrams...vpE6I27a--2ExMw
+
+
+3.)
+
+a.)
+school=# SELECT student.fullname, enrollment.class_id, class.name as class_name FROM student JOIN enrollment ON student.id = enrollment.student_id JOIN class ON enrollment.class_id = class.id;
+     fullname      | class_id |     class_name
+-------------------+----------+---------------------
+ John Smith        |        2 | Applied Mathematics
+ John Smith        |        7 | Anatomy
+ Juliana Craine    |        7 | Anatomy
+ Juliana Craine    |        4 | US History
+ Juliana Craine    |        5 | Chemistry
+ Frank Flint       |        1 | Social Sciences
+ Frank Flint       |        6 | Robotics
+ Frank Flint       |        2 | Applied Mathematics
+ Lem Washington    |        2 | Applied Mathematics
+ Hirohito Nagasaki |        1 | Social Sciences
+
+ b.)
+ school=# SELECT class.name as class_name, COUNT(enrollment.grade) as grade_count FROM class JOIN enrollment ON enrollment.class_id = class.id GROUP BY class_name;
+     class_name      | grade_count
+---------------------+-------------
+ Robotics            |           1
+ US History          |           1
+ Chemistry           |           1
+ Social Sciences     |           2
+ Anatomy             |           2
+ Applied Mathematics |           3
+(6 rows)
+
+c.)
+school=# SELECT class.name as class_name, COUNT(student_id) as student_count FROM class JOIN enrollment ON class.id = enrollment.class_id JOIN student ON student.id = enrollment.student_id GROUP BY class.name;
+     class_name      | student_count
+---------------------+---------------
+ Robotics            |             1
+ US History          |             1
+ Chemistry           |             1
+ Social Sciences     |             2
+ Anatomy             |             2
+ Applied Mathematics |             3
+(6 rows)
