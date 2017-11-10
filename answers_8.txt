@@ -1,0 +1,53 @@
+1.)
+Data normalization increases the accuracy of results returned from a database. It also follows the principle of conciseness.
+I believe that data normalization is ideal for banking databases. In banking, there are millions of clients. With each client,
+are a set of unique attributes/information to for the bank to store so normalization would be a best practice.
+
+
+2.)
+1NF first normal form- Column of table cannot contain multiple values
+2NF second normal form- being 1NF is a prerequisite, all none-key attributes cannot be dependent on a subset of the primary key.
+3NF third normal form- must be a 2NF, all transitive functional dependencies of a non-prime attribute must no exist.
+BCNF Boyce Codd normal form- must be a 3NF, for every dependency (X -> Y). X must be a super key.
+
+1NF - Account owner must contain only one name since there is only one primary account owner for an account.
+2NF - Address is dependent of the account name but not dependent of the account number. That mean's bank needs to create a separate table containing the account owner's name and his/her corresponding address.
+3NF - Account name is dependent to account number, while account address is dependent to account owner meaning account address is dependent to account number
+which should not be happening since the address is not limited to account number.
+BCNF - We need to create a super key table containing account number and account owner's name so we can uniquely identify all other attributes from various tables.
+
+
+3.)
+table 1
+student_id student_name student_email
+
+table 2
+subject professor_id grade
+
+table 3
+professor_id professor_name entry_id
+
+table 4
+student_id subject
+
+
+4.)
+Querying would be very difficult. With all the tables involved, querying would require multiple join statements to obtain your desired result.
+
+
+5.)
+table 1
+student_id student_name student_email subject
+
+table 2
+subject professor_id entry_id professor_name grade
+
+
+6.)
+The most important benefit of data normalization is the minimization of redundancy and improving data accuracy of your database, as well as the arrangement of data into logical groupings.
+Normalization helps you with the organization and modification of your since the database is broken down into pieces to represent a whole like you are creating a puzzle.
+The risk for normalization is that it is difficult a database. A poorly normalized table can cause problems, ranging from excessive disk input and output and subsequent poor system performance to inaccurate data.
+An improperly normalized condition can result to excessive redundancy which mean it will do you more harm than good. Last but not the list, data denormalization is a nightmare for querying.
+
+The main purpose of data denormalization is to increase read performance. Denormalized database would be easier to query with. One of the biggest downside of denormalization that its is very hard to modify. Modifying a denormalized table would be
+very costly given that there converting the data into a new structure is something that can go very badly once a mistake has been made. Lastly, it is more time consuming to construct a denormalized database.

@@ -80,16 +80,18 @@ school=# SELECT student.fullname, enrollment.class_id, class.name as class_name 
  Hirohito Nagasaki |        1 | Social Sciences
 
  b.)
- school=# SELECT class.name as class_name, COUNT(enrollment.grade) as grade_count FROM class JOIN enrollment ON enrollment.class_id = class.id GROUP BY class_name;
-     class_name      | grade_count
----------------------+-------------
- Robotics            |           1
- US History          |           1
- Chemistry           |           1
- Social Sciences     |           2
- Anatomy             |           2
- Applied Mathematics |           3
-(6 rows)
+ school=# SELECT class.name, enrollment.grade, COUNT(enrollment.grade) FROM class JOIN enrollment ON enrollment.class_id = class.id GROUP BY enrollment.grade, class.name ORDER BY class.name;
+         name         | grade | count
+ ---------------------+-------+-------
+  Anatomy             | A     |     1
+  Anatomy             | C     |     1
+  Applied Mathematics | B     |     3
+  Chemistry           | C     |     1
+  Robotics            | A     |     1
+  Social Sciences     | A     |     1
+  Social Sciences     | D     |     1
+  US History          | C     |     1
+ (8 rows)
 
 c.)
 school=# SELECT class.name as class_name, COUNT(student_id) as student_count FROM class JOIN enrollment ON class.id = enrollment.class_id JOIN student ON student.id = enrollment.student_id GROUP BY class.name;
@@ -102,3 +104,5 @@ school=# SELECT class.name as class_name, COUNT(student_id) as student_count FRO
  Anatomy             |             2
  Applied Mathematics |             3
 (6 rows)
+
+d.)
