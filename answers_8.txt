@@ -47,7 +47,7 @@ subject professor_id entry_id professor_name grade
 The most important benefit of data normalization is the minimization of redundancy and improving data accuracy of your database, as well as the arrangement of data into logical groupings.
 Normalization helps you with the organization and modification of your since the database is broken down into pieces to represent a whole like you are creating a puzzle.
 The risk for normalization is that it is difficult a database. A poorly normalized table can cause problems, ranging from excessive disk input and output and subsequent poor system performance to inaccurate data.
-An improperly normalized condition can result to excessive redundancy which mean it will do you more harm than good. Last but not the list, data denormalization is a nightmare for querying.
+An improperly normalized condition can result to excessive redundancy which mean it will do you more harm than good. Last but not the list, data normalization is a nightmare for querying.
 
 The main purpose of data denormalization is to increase read performance. Denormalized database would be easier to query with. One of the biggest downside of denormalization that its is very hard to modify. Modifying a denormalized table would be
 very costly given that there converting the data into a new structure is something that can go very badly once a mistake has been made. Lastly, it is more time consuming to construct a denormalized database.
