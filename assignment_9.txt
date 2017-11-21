@@ -54,18 +54,18 @@ adopters table has the columns first_name, last_name, address, and phone number
 volunteers table has the columns id, name, address, phone_number, available_to_foster, and foster_id
 
 Create a list of all volunteers. If the volunteer is fostering a dog, include each dog as well.
-a.) SELECT volunteers.name, dog.name FROM volunteers, dogs WHERE id = SOME (SELECT dogs.id FROM dogs, volunteers WHERE dogs.id = volunteers.foster_id);
+a.) SELECT volunteers.name, dog.name FROM volunteers, dogs WHERE dogs.id IN (SELECT dogs.id FROM dogs, volunteers WHERE dogs.id = volunteers.foster_id);
 
 List the adopter’s name and the pet’s name for each animal adopted within the past month to be displayed as a ‘Happy Tail’ on social media.
-b.) SELECT adopter, dog FROM adoptions WHERE date = DATE_PART(now() - '2017-10-16');
+b.) SELECT adopter, dog, cat FROM adoptions WHERE date = (now() - INTERVAL '30 days');
 
 Create a list of adopters who have not yet chosen a dog to adopt and generate all possible combinations of adopters and available dogs.
-c.) SELECT first_name, last_name FROM adopters WHERE EXISTS (SELECT adopter FROM adoptions WHERE adoptions.dog IS NULL);
-SELECT adoptions.adopter, adoptions.dogs FROM adoptions WHERE id IN (SELECT id, name FROM dogs WHERE dogs.in_foster IS NULL);
+c.) SELECT adopter FROM adoptions WHERE EXISTS (SELECT adopter FROM adoptions WHERE adoptions.dog IS NULL);
+SELECT adoptions.adopter, adoptions.dog FROM adoptions WHERE dog IN (SELECT name FROM dogs WHERE dogs.in_foster IS NULL);
 
 Display a list of all cats and all dogs who have not been adopted.
 d.)
-SELECT dogs.name, cats.name FROM dogs, cats WHERE EXISTS (SELECT foster_id FROM volunteers WHERE foster_id != dogs.id OR cats.id);
+SELECT dogs.name, cats.name FROM dogs, cats WHERE id IN (SELECT foster_id FROM volunteers WHERE foster_id != dogs.id OR cats.id) AND in_foster = 'No';
 
 Create a list of volunteers who are available to foster. If they currently are fostering a dog, include the dog. Also include all dogs who are not currently in foster homes.
 e.)
@@ -79,7 +79,7 @@ adopters table has the columns first_name, last_name, address, and phone number
 
 Write a query to find the name of the person who adopted Seashell
 
-SELECT adoptions.adopter, adoptions.cat FROM adoptions, (SELECT name FROM cats WHERE name = 'Seashell') AS seashell WHERE adoptions.cat = seashell;
+SELECT adoptions.adopter FROM adoptions, (SELECT name FROM cats WHERE name = 'Seashell') AS seashell WHERE adoptions.cat = seashell;
 
 10.
 books (isbn, title, author)
@@ -95,7 +95,7 @@ WHERE p.id = user_id ORDER BY p.id;
 
 Make a list of all book titles and denote whether or not a copy of that book is checked out.
 b.)
-SELECT books.title, check_out FROM books, (SELECT isbn, check_out_date AS check_out FROM transactions) AS t WHERE books.isbn = t.isbn;
+SELECT books.title, check_out_date FROM books, (SELECT isbn, check_out_date FROM transactions) AS t WHERE books.isbn = t.isbn;
 
 In an effort to learn which books take longer to read, the librarians would like you to create a list of total checked out time by book name in the past month.
 c.)
@@ -104,12 +104,12 @@ WHERE books.isbn IN (SELECT isbn FROM transactions);
 
 In order to learn which items should be retired, make a list of all books that have not been checked out in the past 5 years.
 d.)
-SELECT books.name FROM books WHERE EXISTS (SELECT isbn FROM transactions WHERE check_out_date = DATE_PART('year', now()) - DATE_PART('year', now() - INTERVAL '5 Years'));
+SELECT books.name FROM books WHERE EXISTS (SELECT isbn FROM transactions WHERE check_out_date = DATE_PART('year', now()) - DATE_PART('year', now() - INTERVAL '5 Years') AND books.isbn = transactions.isbn);
 
 
 List all of the library patrons. If they have one or more books checked out, correspond the books to the patrons.
 e.)
-SELECT patrons.name, books.name FROM patrons, books WHERE books.isbn IN (SELECT isbn FROM transactions WHERE COUNT(isbn) >= 1);
+SELECT patrons.name, books.name FROM patrons, books WHERE books.isbn IN (SELECT isbn FROM transactions, holds WHERE COUNT(holds.isbn) >= 1 AND holds.isbn = transactions.isbn);
 
 
 11.
@@ -120,13 +120,13 @@ transactions(id, seats_sold, total_revenue, total_cost, flight_number, date)
 
 To determine the most profitable airplanes, find all airplane models where each flight has had over 100 paying customers in the past month.
 a.)
-SELECT airplanes.model FROM airplanes, flights WHERE
-EXISTS (SELECT seats_sold FROM transactions WHERE seats_sold > 100 AND date = DATE_PART('month', now()) - DATE_PART('month', now() - INTERVAL '1 month'))
-AND airplanes.model = flights.airplane_model;
+SELECT airplanes.model FROM airplanes WHERE model IN
+(SELECT airplane_model FROM flights, transactions AS t WHERE t.seats_sold > 100 AND date = DATE_PART('month', now()) - DATE_PART('month', now() - INTERVAL '1 month'))
+AND t.flight_number = flights.flight_number);
 
 To determine the most profitable flights, find all destination-origin pairs where 90% or more of the seats have been sold in the past month.
 b.)
-SELECT destination, origin FROM flights WHERE flights.flight_number = (SELECT flight_number, ROUND(100.0 * (SUM(seats_sold)/COUNT(seats_sold)), 2) AS percent FROM transactions WHERE p >= 90 GROUP BY flight_number);
+SELECT destination, origin FROM flights WHERE flights.flight_number IN (SELECT flight_number, ROUND(100.0 * (SUM(seats_sold)/COUNT(seats_sold)), 2) AS percent FROM transactions WHERE percent >= 90 GROUP BY flight_number);
 
 
 The airline is looking to expand its presence in the US Southeast and globally. Find the total revenue of any flight arriving at or departing from Atlanta.
